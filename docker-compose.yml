@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: bd_vagas_dev
+    environment:
+      POSTGRES_USER: dev_user
+      POSTGRES_PASSWORD: dev_password
+      POSTGRES_DB: vagas_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U dev_user -d vagas_db" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # api e o nosso Flask na porta 5000
+  api:
+    build: .
+    container_name: api_vagas_teste
+    ports:
+      - "5000:5000"
+    environment:
+      # passo exatamente as credenciais de cima para o flask usar o banco db pelo nome da rede do docker
+      - DATABASE_URL=postgresql://dev_user:dev_password@db:5432/vagas_db
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  # um volume na maquina virtual para que o banco não zere todo se desligarmos o container
+  postgres_data:
