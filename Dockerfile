@@ -10,10 +10,10 @@ COPY requirements.txt .
 # Instalo as dependências sem deixar sujeira no cache (--no-cache-dir)
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copio tudo que eu programei para dentro do meu ambiente rodar 
+# Copio tudo que eu programei para dentro do meu ambiente
 COPY . .
 
-# Explicita que a 5000 ta virada pro mundo externo 
+# Explicita que a 5000 ta virada pro mundo externo
 EXPOSE 5000
 
 # Executo a principal
