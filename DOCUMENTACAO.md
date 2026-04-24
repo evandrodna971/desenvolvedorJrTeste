@@ -6,7 +6,7 @@ A URL base local será sempre: `http://localhost:5000`
 ---
 
 ## 1. Rota Principal
-Serve como um "Health Check". Basicamente vê se a API subiu sem dar pau.
+Serve como um "Health Check". Basicamente vê se a API subiu sem dar problema.
 
 - **URL:** `/`
 - **Método HTTP:** `GET`
@@ -14,7 +14,7 @@ Serve como um "Health Check". Basicamente vê se a API subiu sem dar pau.
 - **Response (200 OK):**
   ```json
   {
-    "mensagem": "API de Vagas rodando tranquilamente!"
+    "mensagem": "API de Vagas Ativa!"
   }
   ```
 
@@ -29,7 +29,7 @@ Cria um registro novo no banco de uma vaga de emprego ou envio de currículo que
   - `empresa` (Obrigatório, String)
   - `cargo` (Obrigatório, String)
   - `status` (Opcional, String) -> Se não pôr, ele salva "Enviado" por padrão.
-  - `data_aplicacao` (Opcional, Data YYYY-MM-DD) -> Se ignorar, ele chuta pro bd usar a data de atual do dia.
+  - `data_aplicacao` (Opcional, Data YYYY-MM-DD) -> Se ignorar, ele salva a data atual do dia.
   
   Exemplo do que seria enviado no seu Insomnia:
   ```json
@@ -49,14 +49,14 @@ Cria um registro novo no banco de uma vaga de emprego ou envio de currículo que
 - **Response Erro - Usuário esqueceu mandou incompleto (400 Bad Request):**
   ```json
   {
-    "erro": "Vish, esqueceu algo! 'empresa' e 'cargo' são campos obrigatórios."
+    "erro": "Esqueceu algo! 'empresa' e 'cargo' são campos obrigatórios."
   }
   ```
 
 ---
 
 ## 3. Listar Todas as Vagas
-Baixa a lista de geral que você salvou antes.
+Baixa a lista geral que você salvou.
 
 - **URL:** `/vagas`
 - **Método HTTP:** `GET`
@@ -109,7 +109,7 @@ Traz so uma vaga passando o `ID` lá no final da Rota de chamada.
 ---
 
 ## 5. Atualizar Vaga
-Aquele famoso UPDATE. Útil quando você tava no status "Enviado", e a empresa mandou email marcando entrevista. Ai você vai lá e avisa atualiza o status dela.
+Aquele famoso UPDATE. Útil quando você estava no status "Enviado", e a empresa mandou email marcando entrevista. Ai você vai lá e avisa atualiza o status dela.
 
 - **URL:** `/vagas/<id>` (Exemplo: `/vagas/1`)
 - **Método HTTP:** `PUT`
@@ -122,7 +122,7 @@ Aquele famoso UPDATE. Útil quando você tava no status "Enviado", e a empresa m
 - **Response Sucesso (200 OK):**
   ```json
   {
-    "mensagem": "Informações atualizadas certinho!"
+    "mensagem": "Informações atualizadas!"
   }
   ```
 - **Response Erro (404 Not Found):**
@@ -135,30 +135,30 @@ Aquele famoso UPDATE. Útil quando você tava no status "Enviado", e a empresa m
 ---
 
 ## 6. Deletar Vaga
-Sumiu com todas as esperanças da vaga ou duplicou na hora de salvar? Usa o DELETAR pra extirpar do banco de dados (o banco que perdoe).
+Sumiu com todas as esperanças da vaga ou duplicou na hora de salvar? Usa o DELETAR pra apagar do banco de dados.
 
 - **URL:** `/vagas/<id>`
 - **Método HTTP:** `DELETE`
-- **Request Body:** Nada denovo.
+- **Request Body:** Nada.
 - **Response Sucesso (200 OK):**
   ```json
   {
-    "mensagem": "Vaga apagada do histórico."
+    "mensagem": "Vaga apagada."
   }
   ```
 - **Response Erro (404 Not Found):**
   ```json
   {
-    "erro": "Vaga não encontrada pra deletar."
+    "erro": "Vaga não encontrada."
   }
   ```
 
 ---
 
 ## Padrões de Códigos de Erro (Http Status Code)
-Só de bate pronto, pra você não se perder:
-- `200` (OK): Tudo que eu te mandei você me entregou ou eu processei tranquilamente.
+Para você não se perder:
+- `200` (OK): Tudo que eu te mandei você me entregou ou eu processei.
 - `201` (Created): Você cadastrou e eu salvei!
-- `400` (Bad Request): Foi mandado algum formato errado pra mim, tipo faltar um dado exigido.
+- `400` (Bad Request): Foi mandado algum formato errado para mim, tipo faltar um dado exigido.
 - `404` (Not Found): Aquele id especificado simplesmente não acha nada.
-- `500` (Internal Server Error): Deu panico. Erro feio geralmente de banco fora do ar ou eu digitei o SQL errado. Eu deixei um block `try/except` segurando tudo, para ele devolver como erro limpo no final para mim e não quebrar subitamente o terminal em si.
+- `500` (Internal Server Error): Erro feio geralmente de banco fora do ar ou eu digitei o SQL errado. Eu deixei um block `try/except` segurando tudo, para ele devolver como erro limpo no final para mim e não quebrar subitamente o terminal em si.
