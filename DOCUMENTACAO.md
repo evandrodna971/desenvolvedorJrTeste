@@ -162,3 +162,20 @@ Para você não se perder:
 - `400` (Bad Request): Foi mandado algum formato errado para mim, tipo faltar um dado exigido.
 - `404` (Not Found): Aquele id especificado simplesmente não acha nada.
 - `500` (Internal Server Error): Erro feio geralmente de banco fora do ar ou eu digitei o SQL errado. Eu deixei um block `try/except` segurando tudo, para ele devolver como erro limpo no final para mim e não quebrar subitamente o terminal em si.
+
+---
+
+## 🧪 Testes Automatizados da API
+
+Foi criado um script robusto na pasta `/tests` (`test_rotas.py`). Ele fará todo o fluxo completo em questão de milissegundos testando diretamente no banco em ambiente Docker:
+
+1. Subirá 3 vagas completas reais no banco (para testar os `201 Created`);
+2. Forçará vagas nulas e vazias (para acionar os `400 BadRequest`);
+3. Buscará uma lista enorme com essas vagas e filtrará uma pela ID;
+4. Digitará e tentará buscar uma ID absurda e inexistente pra forçar os `404 Not Found`;
+5. Fará updates e depois confirmará sozinho via GET pra averiguar se o salvamento foi concluído;
+6. Limpará todo o banco deletando cada ID criada (sem mexer naquelas que você mesmo cadastrou).
+
+**Como acionar a verificação:**
+Com os containers Docker rodando as instâncias normais do projeto, digite no terminal principal:
+`python tests/test_rotas.py`

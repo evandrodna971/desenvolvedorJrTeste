@@ -50,3 +50,14 @@ Caso você já tenha o banco de dados PostgreSQL rodando na sua máquina:
 Depois de botar o programa para rodar (em `http://localhost:5000`), você usa qualquer client como Postman, Insomnia ou até o cURL no prompt de comando.
 
 Fiz uma documentação bem mastigada. Tem um arquivo chamado `DOCUMENTACAO.md` e está salvo na mesma pasta! Eu detalhei cada uma das rotas e os dados que tem que enviar de forma bem simplificada para facilitar.
+
+## 🧪 Como Rodar os Testes Automatizados
+
+O projeto conta com uma suíte de testes ponta a ponta configurada para interagir com o seu banco de dados diretamente, validando o CRUD 100% das rotas e garantindo que tudo está rodando liso sem quebrar o banco, pois ele limpa tudo depois que valida.
+
+### Com Docker (Recomendado)
+Se a API e o Banco já estiverem rodando via `docker-compose up -d`, abra outro terminal e execute:
+```bash
+python tests/test_rotas.py
+```
+*Observação: Vai ser retornado no terminal um log enorme detalhando a Criação, Edição, Deleção, Verificação de Health e respostas a todas as tentativas (Sucessos e Erros 404 e 400 simulados na hora).*
