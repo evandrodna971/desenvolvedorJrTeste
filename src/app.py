@@ -12,7 +12,7 @@ DATABASE_URL = os.environ.get("DATABASE_URL", "postgresql://dev_user:dev_passwor
 
 def get_db_connection():
     """
-    Essa função é responsável conectar ao Postgres.
+    Essa função é responsável por conectar ao Postgres.
     """
     try:
         # RealDictCursor facilita a minha vida, ao invés de buscar os dados numa lista (1, 'Vaga', etc), 
@@ -83,7 +83,7 @@ def criar_vaga():
     cursor = conn.cursor()
     
     try:
-        # Protegendo usando o %s (parametros bindables) para ninguém usar SQL injection
+        # Protegendo usando o %s para ninguém usar SQL injection
         if data_aplicacao:
             # O RETURNING id retorna o id gerado pelo banco
             comando = "INSERT INTO vagas (empresa, cargo, status, data_aplicacao) VALUES (%s, %s, %s, %s) RETURNING id;"
@@ -139,9 +139,9 @@ def buscar_uma_vaga(vaga_id):
         cursor.execute("SELECT * FROM vagas WHERE id = %s;", (vaga_id,))
         vaga = cursor.fetchone()
         
-        # Testinho p ver se n pediram coisa de excluso antes
+        # Se não achar nada, retorna 404 (não encontrado)
         if not vaga:
-            return jsonify({"erro": "Vaga não encontrada no sistema"}), 404
+            return jsonify({"erro": "Vaga não encontrada"}), 404
             
         return jsonify(vaga), 200
     except Exception as e:
