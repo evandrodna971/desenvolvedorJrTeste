@@ -165,6 +165,52 @@ Para você não se perder:
 
 ---
 
+## 📋 EXEMPLOS NO POWERSHELL PARA VOCÊ TESTAR A API
+
+## 1. 📝 POST - Criar vaga (todos os campos)
+
+$r = Invoke-WebRequest -Uri "http://localhost:5000/vagas" -Method POST -ContentType "application/json" -Body '{"empresa":"Microsoft","cargo":"Backend Engineer","status":"Entrevista Agendada","data_aplicacao":"2026-04-20"}'
+Write-Host "Status:" $r.StatusCode
+Write-Host "Resposta:" $r.Content
+
+## 2. 📝 POST - Criar vaga (só obrigatórios)
+
+$r = Invoke-WebRequest -Uri "http://localhost:5000/vagas" -Method POST -ContentType "application/json" -Body '{"empresa":"Google Brasil","cargo":"Desenvolvedor Junior Python"}'
+Write-Host "Status:" $r.StatusCode
+Write-Host "Resposta:" $r.Content
+
+## 3. 📋 GET - Listar todas as vagas
+
+$r = Invoke-WebRequest -Uri "http://localhost:5000/vagas" -Method GET
+Write-Host "Status:" $r.StatusCode
+Write-Host "Resposta:" $r.Content
+
+## 4. 🔍 GET - Buscar vaga por ID (substitua 1 pelo ID)
+
+$r = Invoke-WebRequest -Uri "http://localhost:5000/vagas/1" -Method GET
+Write-Host "Status:" $r.StatusCode
+Write-Host "Resposta:" $r.Content
+
+## 5. ✏️ PUT - Atualizar vaga inteira (substitua 1 pelo ID)
+
+$r = Invoke-WebRequest -Uri "http://localhost:5000/vagas/1" -Method PUT -ContentType "application/json" -Body '{"empresa":"Amazon","cargo":"Senior Python","status":"Aprovado","data_aplicacao":"2026-04-21"}'
+Write-Host "Status:" $r.StatusCode
+Write-Host "Resposta:" $r.Content
+
+## 6. 🔧 PATCH - Atualizar campo específico (substitua 1 pelo ID)
+
+$r = Invoke-WebRequest -Uri "http://localhost:5000/vagas/1" -Method PATCH -ContentType "application/json" -Body '{"status":"Entrevista Final"}'
+Write-Host "Status:" $r.StatusCode
+Write-Host "Resposta:" $r.Content
+
+## 7. ❌ DELETE - Deletar vaga (substitua 1 pelo ID)
+
+$r = Invoke-WebRequest -Uri "http://localhost:5000/vagas/1" -Method DELETE
+Write-Host "Status:" $r.StatusCode
+Write-Host "Resposta:" $r.Content
+
+---
+
 ## 🧪 Testes Automatizados da API
 
 Foi criado um script robusto na pasta `/tests` (`test_rotas.py`). Ele fará todo o fluxo completo em questão de milissegundos testando diretamente no banco em ambiente Docker:
